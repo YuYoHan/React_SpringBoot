@@ -1,0 +1,6 @@
+jwt:
+  secret_key: jwt 비번
+  access:
+    expiration: 3600000000
+  refresh:
+    expiration: 1209600000000
