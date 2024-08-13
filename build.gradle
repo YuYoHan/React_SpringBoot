@@ -35,16 +35,20 @@ dependencies {
     // 유효성 검사
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    // 룸북
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     testCompileOnly 'org.projectlombok:lombok'
     testAnnotationProcessor 'org.projectlombok:lombok'
+    // 데브툴스
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    // h2
     runtimeOnly 'com.h2database:h2'
-    annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    // 구글 구아바 그래들 스니펫
+    implementation group: 'com.google.guava', name: 'guaba', version: '31.1-jre'
 }
 
 tasks.named('test') {
