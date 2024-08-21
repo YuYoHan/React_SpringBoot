@@ -43,4 +43,43 @@ public class TodoController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+    @GetMapping
+    public ResponseEntity<?> retrieveTodoList() {
+        String temporaryUserId = "temporary-user";
+        List<TodoEntity> entities = todoService.retrieve(temporaryUserId);
+        List<TodoDTO> dtos = entities.stream()
+                .map(TodoDTO::new)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok().body(dtos);
+    }
+
+    @PutMapping
+    public ResponseEntity<?> updateTodo(@RequestBody TodoDTO todoDTO) {
+        String temporaryUserId = "temporary-user";
+        TodoEntity entity = TodoDTO.toEntity(todoDTO);
+        entity.addUserId(temporaryUserId);
+        List<TodoEntity> entities = todoService.update(entity);
+        List<TodoDTO> response = entities.stream()
+                .map(TodoDTO::new)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok().body(response);
+    }
+
+    @DeleteMapping
+    public ResponseEntity<?> deleteTodo(@RequestBody TodoDTO todoDTO) {
+        try {
+            String temporaryUserId = "temporary-user";
+            TodoEntity entity = TodoDTO.toEntity(todoDTO);
+            entity.addUserId(temporaryUserId);
+            List<TodoEntity> entities = todoService.delete(entity);
+            List<TodoDTO> response = entities.stream()
+                    .map(TodoDTO::new)
+                    .collect(Collectors.toList());
+            return ResponseEntity.ok().body(response);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
 }

@@ -43,4 +43,28 @@ public class TodoService {
             throw new RuntimeException("Unknown user");
         }
     }
+
+    public List<TodoEntity> retrieve(final String userId) {
+        return todoRepository.findByUserId(userId);
+    }
+
+    public List<TodoEntity> update(final TodoEntity entity) {
+        validate(entity);
+
+        TodoEntity todoEntity = todoRepository.findById(entity.getId()).orElseThrow();
+        todoRepository.save(todoEntity);
+        return retrieve(entity.getUserId());
+    }
+
+    public List<TodoEntity> delete(final TodoEntity entity) {
+        validate(entity);
+
+        try {
+            todoRepository.delete(entity);
+        } catch (Exception e) {
+            log.error("error deleting entity", entity.getId(), e);
+            throw new RuntimeException("error deleting entity" + entity.getId());
+        }
+        return retrieve(entity.getUserId());
+    }
 }
